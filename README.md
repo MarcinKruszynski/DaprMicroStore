@@ -1,3 +1,3 @@
-# DaprSample
+# DaprMicroStore
 
 My experiment with Dapr.
