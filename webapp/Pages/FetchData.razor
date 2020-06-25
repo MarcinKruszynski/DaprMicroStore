@@ -1,0 +1,49 @@
+﻿@page "/fetchdata"
+
+@using webapp.Model
+
+<h1>Products</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>StockQuantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.StockQuantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private ProductItem[] products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = new ProductItem[] 
+        {
+            new ProductItem { Name = "Zaraza", Price = 25m, StockQuantity = 10000 },
+            new ProductItem { Name = "Melassa", Price = 20m, StockQuantity = 3000 }
+        };
+    }
+}
