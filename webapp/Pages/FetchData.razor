@@ -1,4 +1,5 @@
 ﻿@page "/fetchdata"
+@inject DaprClient Dapr
 
 @using webapp.Model
 
@@ -40,10 +41,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        products = new ProductItem[] 
-        {
-            new ProductItem { Name = "Zaraza", Price = 25m, StockQuantity = 10000 },
-            new ProductItem { Name = "Melassa", Price = 20m, StockQuantity = 3000 }
-        };
+        products = await Dapr.InvokeMethodAsync<ProductItem[]>("products", "items");        
     }
 }

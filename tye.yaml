@@ -1,0 +1,24 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: daprmicrostore
+extensions:
+  - name: dapr
+  
+    # log-level configures the log level of the dapr sidecar
+    log-level: debug
+  
+    # config allows you to pass additional configuration into the dapr sidecar
+    # config will be interpreted as a named k8s resource when deployed, and will be interpreted as
+    # a file on disk when running locally at `./components/myconfig.yaml`
+    #
+    # config: myconfig
+
+services:
+- name: webapp
+  project: webapp/webapp.csproj
+- name: products
+  project: products/products.csproj

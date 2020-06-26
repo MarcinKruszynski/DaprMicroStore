@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -14,6 +15,12 @@ namespace webapp
 {
     public class Startup
     {
+        private readonly JsonSerializerOptions options = new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,7 +33,11 @@ namespace webapp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddServerSideBlazor();            
+            services.AddServerSideBlazor(); 
+            services.AddDaprClient(client =>
+            {
+                client.UseJsonSerializationOptions(options);
+            });           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

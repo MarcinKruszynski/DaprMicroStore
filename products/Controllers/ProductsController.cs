@@ -17,7 +17,8 @@ namespace products.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductItem> Get()
+        [Route("items")]
+        public IEnumerable<ProductItem> Items()
         {
             return new List<ProductItem>()
             {
