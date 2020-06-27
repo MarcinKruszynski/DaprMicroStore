@@ -41,6 +41,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        products = await Dapr.InvokeMethodAsync<ProductItem[]>("products", "items");        
+        products = await Dapr.InvokeMethodAsync<ProductItem[]>("products", "list");        
     }
 }
