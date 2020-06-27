@@ -41,6 +41,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        products = await Dapr.InvokeMethodAsync<ProductItem[]>("products", "list");        
+        var httpExtension = new HTTPExtension
+        {
+            Verb = HTTPVerb.Get
+        };            
+
+        products = await Dapr.InvokeMethodAsync<ProductItem[]>("products", "list", httpExtension);        
     }
 }
