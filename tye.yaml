@@ -22,3 +22,5 @@ services:
   project: webapp/webapp.csproj
 - name: products
   project: products/products.csproj
+- name: bookings
+  project: bookings/bookings.csproj
