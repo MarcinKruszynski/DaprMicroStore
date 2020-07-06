@@ -44,7 +44,9 @@ namespace products
                 app.UseDeveloperExceptionPage();
             }            
 
-            app.UseRouting();            
+            app.UseRouting(); 
+
+            app.UseCloudEvents();           
 
             app.UseEndpoints(endpoints =>
             {
