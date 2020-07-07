@@ -12,4 +12,9 @@ Sample microservice app using:
 - Dapr
 - Tye
 
+
+Tye Dapr Extension for Dapr 0.8.0 workaround: copy components/pubsub.yaml to %UserProfile%\.dapr\components 
+https://github.com/dotnet/tye/issues/555
+
+
 To be continued

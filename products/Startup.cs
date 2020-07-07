@@ -50,6 +50,8 @@ namespace products
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapSubscribeHandler();
+
                 endpoints.MapGet("list", Items); 
                 endpoints.MapPost("checkBooking", CheckBooking).WithTopic("bookingToCheck");               
             });
