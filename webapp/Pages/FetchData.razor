@@ -72,6 +72,6 @@ else
             Verb = HTTPVerb.Post
         };
         
-        await Dapr.InvokeMethodAsync("bookings", "checkout", data, httpExtension);  
+        await Dapr.InvokeMethodAsync("bookings", "bookings/checkout", data, httpExtension);  
     }
 }
