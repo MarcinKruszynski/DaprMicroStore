@@ -32,7 +32,7 @@ else
                     <td>@product.Price</td>
                     <td>@product.StockQuantity</td>
                     <td>
-                        <button class="btn btn-primary" @onclick="Book">BOOK</button>
+                        <button class="btn btn-primary" @onclick="@(() => Book(product))">BOOK</button>
                     </td>
                 </tr>
             }
@@ -53,10 +53,8 @@ else
         products = await Dapr.InvokeMethodAsync<ProductItem[]>("products", "list", httpExtension);        
     }
 
-    public async Task Book()
+    public async Task Book(ProductItem product)
     {
-        var product = products[0];
-
         var guid = Guid.NewGuid().ToString();
 
         var data = new BookingCheckout {
