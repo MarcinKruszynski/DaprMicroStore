@@ -7,6 +7,10 @@ using Microsoft.Extensions.Logging;
 using bookings.Model;
 using Dapr;
 using Dapr.Client;
+using System.Threading;
+using Microsoft.Extensions.Configuration;
+using System.Net.Http;
+using System.Text;
 
 namespace bookings.Controllers
 {
@@ -35,9 +39,23 @@ namespace bookings.Controllers
 
         [Topic("bookingStockConfirmed")]
         [HttpPost("bookingStockConfirmed")]
-        public async Task BookingStockConfirmed(BookingStockConfirmation confirmation, [FromServices] ILogger<BookingsController> logger)
+        public async Task BookingStockConfirmed(BookingStockConfirmation confirmation, [FromServices] DaprClient dapr, [FromServices] ILogger<BookingsController> logger)
         {
             logger.LogInformation("Booking {BookingId} stock confirmed", confirmation.BookingId);
+
+            var notification = new NotificationData { BookingId = confirmation.BookingId };
+            await dapr.InvokeBindingAsync("notifications-topic", "create", notification, null, default(CancellationToken));
+
+            // var httpClient = new HttpClient();
+            // var daprPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT");            
+            // logger.LogInformation($"Dapr port = {daprPort}");            
+            
+            // var json = @"{ ""data"": { ""bookingId"": " + confirmation.BookingId + @" }, ""operation"": ""create"" }";
+            // var data = new StringContent(json, Encoding.UTF8, "application/json");
+            
+            // await httpClient.PostAsync($"http://localhost:{daprPort}/v1.0/bindings/notifications-topic", data);
+
+            logger.LogInformation($"Booking {confirmation.BookingId} confirmation notification was sent.");
         }
 
         [Topic("bookingStockRejected")]
