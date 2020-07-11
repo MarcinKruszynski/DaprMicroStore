@@ -12,7 +12,8 @@ Sample microservice app using:
 - Dapr
 - Tye
 - Redis (pub-sub & state store)
-- Kafka 
+- Kafka
+- Zipkin 
 
 
 Tye Dapr Extension for Dapr 0.8.0 workaround for locally running services: copy components/*.yaml to %UserProfile%\.dapr\components 
