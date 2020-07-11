@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,11 +12,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using notifications.Model;
 
 namespace notifications
 {
     public class Startup
     {
+        private readonly JsonSerializerOptions options = new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -47,8 +55,10 @@ namespace notifications
             });
 
             async Task ProcessNotification(HttpContext context)
-            {                            
-                Console.WriteLine("Hello from Kafka: {0}", context.Request.Body);                                            
+            {  
+                var message = await JsonSerializer.DeserializeAsync<NotificationData>(context.Request.Body, options);
+
+                Console.WriteLine("Hello from Kafka: Booking {0} confirmed.", message.BookingId);                                            
             }
         }
     }
