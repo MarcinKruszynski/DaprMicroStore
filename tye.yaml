@@ -18,6 +18,8 @@ extensions:
     config: appconfig
 
   - name: zipkin
+  - name: elastic
+    logPath: ./.logs
 
 services:
 - name: webapp
