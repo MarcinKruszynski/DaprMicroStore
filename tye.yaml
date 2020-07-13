@@ -30,6 +30,8 @@ services:
   project: bookings/bookings.csproj
 - name: notifications
   project: notifications/notifications.csproj
+- name: clientapp
+  project: clientapp/clientapp.csproj
 
 - name: redis
   image: redis
