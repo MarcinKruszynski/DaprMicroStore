@@ -1,11 +1,13 @@
 @page "/fetchdata"
 @inject HttpClient Http
 
-<h1>Weather forecast</h1>
+@using clientapp.Model
+
+<h1>Products</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (forecasts == null)
+@if (products == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -14,20 +16,24 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>StockQuantity</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var product in products)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.StockQuantity</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="@(() => Book(product))">BOOK</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -35,21 +41,26 @@ else
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    private const string GatewayApiUrl = "http://localhost:8080";
+    private ProductItem[] products;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        products = await Http.GetFromJsonAsync<ProductItem[]>($"{GatewayApiUrl}/api/v1/p/list");
     }
 
-    public class WeatherForecast
+    public async Task Book(ProductItem product)
     {
-        public DateTime Date { get; set; }
+        var guid = Guid.NewGuid().ToString();
 
-        public int TemperatureC { get; set; }
-
-        public string Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        var data = new BookingCheckout {
+            RequestId = guid,
+            ProductId = product.Id,
+            ProductName = product.Name,
+            UnitPrice = product.Price,
+            Quantity = 1
+        };        
+        
+        await Http.PostAsJsonAsync($"{GatewayApiUrl}/api/v1/b/checkout", data);  
     }
 }

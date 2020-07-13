@@ -17,9 +17,19 @@ extensions:
     #
     config: appconfig
 
-  - name: zipkin
-  - name: elastic
-    logPath: ./.logs
+  # - name: zipkin
+  # - name: elastic
+  #   logPath: ./.logs
+
+ingress:
+  - name: ingress
+    bindings:
+      - port: 8080
+    rules:
+      - path: /api/v1/p
+        service: products
+      - path: /api/v1/b
+        service: bookings          
 
 services:
 - name: webapp
@@ -30,8 +40,8 @@ services:
   project: bookings/bookings.csproj
 - name: notifications
   project: notifications/notifications.csproj
-- name: clientapp
-  project: clientapp/clientapp.csproj
+# - name: clientapp
+#   project: clientapp/clientapp.csproj
 
 - name: redis
   image: redis
