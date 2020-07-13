@@ -61,6 +61,6 @@ else
             Quantity = 1
         };        
         
-        await Http.PostAsJsonAsync($"{GatewayApiUrl}/api/v1/b/checkout", data);  
+        await Http.PostAsJsonAsync($"{GatewayApiUrl}/api/v1/b/bookings/checkout", data);  
     }
 }
