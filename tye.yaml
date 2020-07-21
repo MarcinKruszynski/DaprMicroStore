@@ -15,7 +15,10 @@ extensions:
     # config will be interpreted as a named k8s resource when deployed, and will be interpreted as
     # a file on disk when running locally at `./components/myconfig.yaml`
     #
-    config: appconfig
+    #config: appconfig
+
+    # components-path configures the components path of the dapr sidecard
+    components-path: "./components/"
 
   # - name: zipkin
   # - name: elastic
@@ -40,14 +43,20 @@ services:
   project: bookings/bookings.csproj
 - name: notifications
   project: notifications/notifications.csproj
-- name: clientapp
-  dockerFile: clientapp/Dockerfile
+# - name: clientapp
+#   dockerFile: clientapp/Dockerfile
   # project: clientapp/clientapp.csproj
 
 - name: redis
   image: redis
   bindings: 
   - port: 6379
+
+- name: placement
+  image: daprio/dapr
+  args: ./placement
+  bindings:
+    - port: 50005
 
 # - name: zookeeper
 #   image: wurstmeister/zookeeper:latest
