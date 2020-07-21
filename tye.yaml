@@ -15,7 +15,7 @@ extensions:
     # config will be interpreted as a named k8s resource when deployed, and will be interpreted as
     # a file on disk when running locally at `./components/myconfig.yaml`
     #
-    #config: appconfig
+    config: appconfig
 
     # components-path configures the components path of the dapr sidecard
     components-path: "./components/"
