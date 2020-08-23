@@ -48,9 +48,11 @@ namespace bookings.Controllers
 
         [Topic("bookingStockRejected")]
         [HttpPost("bookingStockRejected")]
-        public async Task BookingStockRejected(BookingStockRejection rejection, [FromServices] ILogger<BookingsController> logger)
+        public IActionResult BookingStockRejected(BookingStockRejection rejection, [FromServices] ILogger<BookingsController> logger)
         {
             logger.LogInformation("Booking {BookingId} stock rejected", rejection.BookingId);
+
+            return Ok();
         }
     }
 }
