@@ -13,19 +13,7 @@ Sample microservice app using:
 - Tye
 - Redis (pub-sub & state store)
 - Kafka
-- Zipkin
-- Elastic stack
-- Fluentd
-- Elasticsearch
-- Kibana
-- Prometheus
-- Grafana
 
 
-Tye Dapr Extension for Dapr 0.8.0 workaround for locally running services: copy components/*.yaml to %UserProfile%\.dapr\components 
-https://github.com/dotnet/tye/issues/555
 
-Run Kafka locally without Tye: docker-compose -f ./docker-compose-single-kafka.yml up -d
-https://github.com/dotnet/tye/issues/464
 
-To be continued
