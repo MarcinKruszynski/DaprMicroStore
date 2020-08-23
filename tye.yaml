@@ -23,16 +23,7 @@ extensions:
   # - name: zipkin
   # - name: elastic
   #   logPath: ./.logs
-
-# ingress:
-#   - name: ingress
-#     bindings:
-#       - port: 8080
-#     rules:
-#       - path: /api/v1/p
-#         service: products
-#       - path: /api/v1/b
-#         service: bookings          
+          
 
 services:
 - name: webapp
@@ -43,35 +34,24 @@ services:
   project: bookings/bookings.csproj
 - name: notifications
   project: notifications/notifications.csproj
-# - name: clientapp
-#   dockerFile: clientapp/Dockerfile
-  # project: clientapp/clientapp.csproj
-
 - name: redis
   image: redis
   bindings: 
   - port: 6379
-
-- name: placement
-  image: daprio/dapr
-  args: ./placement
+- name: zookeeper
+  image: wurstmeister/zookeeper:latest
   bindings:
-    - port: 50005
-
-# - name: zookeeper
-#   image: wurstmeister/zookeeper:latest
-#   bindings:
-#     - port: 2181
-#       containerPort: 2181
-# - name: kafka
-#   image: wurstmeister/kafka:latest
-#   bindings:
-#     - port: 9092
-#       containerPort: 9092
-#   env:
-#     - name: KAFKA_ADVERTISED_HOST_NAME
-#       value: 127.0.0.1
-#     - name: KAFKA_CREATE_TOPICS
-#       value: notifications:1:1
-#     - name: KAFKA_ZOOKEEPER_CONNECT
-#       value: zookeeper:2181
+    - port: 2181
+      containerPort: 2181
+- name: kafka
+  image: wurstmeister/kafka:latest
+  bindings:
+    - port: 9092
+      containerPort: 9092
+  env:
+    - name: KAFKA_ADVERTISED_HOST_NAME
+      value: 127.0.0.1
+    - name: KAFKA_CREATE_TOPICS
+      value: notifications:1:1
+    - name: KAFKA_ZOOKEEPER_CONNECT
+      value: zookeeper:2181
