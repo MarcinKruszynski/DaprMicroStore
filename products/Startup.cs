@@ -15,6 +15,7 @@ namespace products
     public class Startup
     {
         public const string StoreName = "default";
+        public const string PubsubName = "pubsub";
 
         private readonly JsonSerializerOptions options = new JsonSerializerOptions()
         {
@@ -65,7 +66,7 @@ namespace products
                 endpoints.MapSubscribeHandler();
 
                 endpoints.MapGet("list", Items); 
-                endpoints.MapPost("checkBooking", CheckBooking).WithTopic("bookingToCheck");               
+                endpoints.MapPost("checkBooking", CheckBooking).WithTopic(PubsubName, "bookingToCheck");               
             });
 
             async Task Items(HttpContext context)
@@ -127,7 +128,7 @@ namespace products
 
                     if (productItem.StockQuantity >= 0)
                     {
-                        await client.PublishEventAsync("bookingStockConfirmed", new BookingStockConfirmation
+                        await client.PublishEventAsync(PubsubName, "bookingStockConfirmed", new BookingStockConfirmation
                         {
                             BookingId = message.BookingId                    
                         });
@@ -138,7 +139,7 @@ namespace products
                 }
 
                 
-                await client.PublishEventAsync("bookingStockRejected", new BookingStockRejection
+                await client.PublishEventAsync(PubsubName, "bookingStockRejected", new BookingStockRejection
                 {
                     BookingId = message.BookingId                    
                 });

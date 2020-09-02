@@ -29,12 +29,12 @@ namespace bookings.Controllers
                 Quantity = bookingCheckout.Quantity
             };
 
-            await dapr.PublishEventAsync("bookingToCheck", eventMessage); 
+            await dapr.PublishEventAsync("pubsub", "bookingToCheck", eventMessage); 
 
             logger.LogInformation("Sent bookingToCheck message for booking {BookingId}", bookingId);          
         }
 
-        [Topic("bookingStockConfirmed")]
+        [Topic("pubsub", "bookingStockConfirmed")]
         [HttpPost("bookingStockConfirmed")]
         public async Task BookingStockConfirmed(BookingStockConfirmation confirmation, [FromServices] DaprClient dapr, [FromServices] ILogger<BookingsController> logger)
         {
@@ -46,7 +46,7 @@ namespace bookings.Controllers
             logger.LogInformation($"Booking {confirmation.BookingId} confirmation notification was sent.");
         }
 
-        [Topic("bookingStockRejected")]
+        [Topic("pubsub", "bookingStockRejected")]
         [HttpPost("bookingStockRejected")]
         public IActionResult BookingStockRejected(BookingStockRejection rejection, [FromServices] ILogger<BookingsController> logger)
         {
