@@ -38,6 +38,10 @@ services:
   image: redis
   bindings: 
   - port: 6379
+
+# There may be a problem with Tye and Kafka when running locally.
+# If that's the case then comment out and use:
+# docker-compose -f ./docker-compose-single-kafka.yml up -d
 - name: zookeeper
   image: wurstmeister/zookeeper:latest
   bindings:
