@@ -4,8 +4,8 @@ My experiment with Dapr and Tye. Just 4 fun.
 
 Sample microservice app using:
 
-- .NET Core 3.1.
-- ASP.NET Core 3.1
+- .NET 5 Preview 8 
+- ASP.NET Core 5
 - Blazor
 - Docker
 - Kubernetes
