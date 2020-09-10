@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <_ShortFrameworkVersion>5.0</_ShortFrameworkVersion>
+    <_ShortFrameworkIdentifier>net</_ShortFrameworkIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
